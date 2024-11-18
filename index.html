@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AR Web App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@2.2.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #allow-camera {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: pink;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        #website-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: pink;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            z-index: 1000;
+            text-decoration: none;
+        }
+        #pink-frame {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 5px solid pink;
+            width: 80%;
+            height: 80%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <button id="allow-camera">Start Camera</button>
+    <div id="pink-frame"></div>
+    <a href="https://irispelled.com" id="website-button" target="_blank">Visit my website</a>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Markers -->
+        <a-assets>
+            <a-asset-item id="dancing-character" src="dancing-character.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Multiple markers -->
+        <a-marker type="pattern" url="trigger.patt" id="marker1">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger1.patt" id="marker2">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model1.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger2.patt" id="marker3">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model2.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger3.patt" id="marker4">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model3.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger4.patt" id="marker5">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model4.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger5.patt" id="marker6">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model5.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger6.patt" id="marker7">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model6.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger7.patt" id="marker8">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model7.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger8.patt" id="marker9">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model8.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+        <a-marker type="pattern" url="trigger9.patt" id="marker10">
+            <a-entity gltf-model="#dancing-character" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+            <a-image src="model9.png" position="0 1 0" scale="1 1 1"></a-image>
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Camera permission button
+        const allowCameraBtn = document.getElementById('allow-camera');
+        const scene = document.querySelector('a-scene');
+
+        allowCameraBtn.addEventListener('click', () => {
+            // Request camera permissions
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(() => {
+                    // Hide the allow camera button
+                    allowCameraBtn.style.display = 'none';
+                    // Start AR scene
+                    scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+                })
+                .catch(error => {
+                    console.error('Camera access denied:', error);
+                    alert('Camera access is required for AR experience');
+                });
+        });
+    </script>
+</body>
+</html>
